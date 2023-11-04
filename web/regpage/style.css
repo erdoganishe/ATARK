@@ -1,0 +1,104 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #10002B;
+    color: #E0AAFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: #3C096C;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+.input-group {
+    margin: 10px 0;
+    position: relative;
+}
+
+label {
+    color: #9D4EDD;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #5A189A;
+    color: #E0AAFF;
+    border-radius: 5px;
+}
+
+input:focus + label,
+input:valid + label {
+    top: -15px;
+    font-size: 12px;
+    color: #C77DFF;
+}
+
+.error-message {
+    display: none;
+    color: #FF5733;
+}
+
+.button-container {
+    margin-top: 20px;
+}
+
+button {
+    background-color: #7B2CBF;
+    color: #E0AAFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.top-bar {
+    background-color: #240046;
+    padding: 10px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo img {
+    height: 40px;
+}
+
+.project-name {
+    color: #E0AAFF;
+    font-size: 24px;
+}
+
+.language-switch .flag {
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.profile-link img {
+    width: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.container {
+    background-color: #3C096C;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
