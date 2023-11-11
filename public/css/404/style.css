@@ -15,51 +15,12 @@ body {
 .container {
     background-color: #3C096C;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 25px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     text-align: center;
+    width: 600px;
 }
 
-.input-group {
-    margin: 10px 0;
-    position: relative;
-    margin-right: 20px;
-}
-
-label {
-    color: #9D4EDD;
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    transition: all 0.2s ease-in-out;
-}
-
-input {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    background-color: #5A189A;
-    color: #E0AAFF;
-    border-radius: 5px;
-}
-
-.error-message {
-    display: none;
-    color: #FF5733;
-}
-
-.button-container {
-    margin-top: 20px;
-}
-
-button {
-    background-color: #7B2CBF;
-    color: #E0AAFF;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
 
 header {
     background:  #7B2CBF;
@@ -92,7 +53,9 @@ header {
     justify-content: space-between;
     align-items: center;
 }
-
+.container .wrapper{
+    margin: 20px;
+}
 .language-container{
     display: flex;
 }
@@ -126,4 +89,15 @@ footer{
     color: #E0AAFF;
     font: 20px;
     margin: 10px;
+}
+
+.to-main-button{
+    width: 250px;
+    height: 30px;
+    font-size: 20px;
+    background-color: #7B2CBF;
+    color: #E0AAFF;
+    border-radius: 5px;
+    text-decoration: none;
+    padding: 5px;
 }

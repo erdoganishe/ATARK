@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"   >
-    <link rel="stylesheet" href="css/profile/style.css">
-    <title>Профіль</title>
+    <link rel="stylesheet" href="css/lock/style.css">
+    <title>Головна</title>
 </head>
 <body>
     
@@ -28,49 +28,31 @@
 
     <div class="container">
         <div class="wrapper">
-            <img id = "profile-img" class="big-profile-img">
-            <h2>Lord Pepemundi</h2> 
-            <button class="profile-button" id = "edit-profile-button">Редагувати профіль</button>
+            <img class="lock-image" src = "img/lock/user1/1.png">
+            <div class="div-button"></div>
         </div>
         <div class="wrapper">
-           E-mail
+            Ідентифікатор
         </div>
         <div class="wrapper">
-            <input class="profile-input" id = "email-input" readonly="readonly" type="email" placeholder="lordpepemundi@gmail.com">
-        </div>
-        <div class="wrapper" id = "login-wrapper">
-            Login
-         </div>
-        <div class="wrapper">
-            <input class="profile-input" id = "login-input" readonly="readonly" type="text" placeholder="Lord Pepemundi">
-        </div>
-        <div class="wrapper" id = "password-wrapper">
-            Змінити пароль
-         </div>
-         <div class="wrapper">
-            <input class="profile-input" id = "old-password-input" readonly="readonly"  type="password" placeholder="Попередній пароль">
+            <label placeholder="lock1">456456</label>
         </div>
         <div class="wrapper">
-            <input class="profile-input" id = "new-password-input" readonly="readonly" type="password" placeholder="Новий пароль">
+            Ім'я
         </div>
         <div class="wrapper">
-            <input class="profile-input" id = "confirm-password-input" readonly="readonly" type="password" placeholder="Підтвердіть новий пароль">
-        </div>
-        <div class="wrapper" id = "login-wrapper">
-            Аватар
+            <input class="profile-input" id = "email-input" readonly="readonly" type="text" placeholder="lock1">
         </div>
         <div class="wrapper">
-            <form id="uploadForm1" class="form-upload">
-                <input type="file" id="myFiles" accept="image/png" />
-            </form>
+            Адреса
         </div>
         <div class="wrapper">
-            <button class="profile-button" id = "save-changes-profile-button">Зберегти зміни</button>
-            <a href="/auth/logout">
-                <button class="profile-button" id = "log-out-profile-button">Вийти з аккаунта</button>
-            </a>
+            <input class="profile-input" id = "email-input" readonly="readonly" type="text" placeholder="Адреса">
         </div>
+
     </div>
+
+
     <footer>
         <div class="wrapper">
             <div class="footer-element"> 
@@ -100,6 +82,5 @@
             </div>
         </div>
     </footer>
-    <script src="script/profile.js"></script>
 </body>
 </html>

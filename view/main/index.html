@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"   >
-    <link rel="stylesheet" href="css/regpage/style.css">
-    <title>Реєстрація</title>
+    <link rel="stylesheet" href="css/main/style.css">
+    <title>Головна</title>
 </head>
 <body>
     
@@ -17,12 +17,8 @@
             <div></div>
             <div></div>
             <div class="language-container">
-                <a href="/registration?lang=uk">
-                    <img class="flag-img choosen" src="img/header/ukr.png">
-                </a>
-                <a href="/registration?lang=en">
-                    <img class="flag-img" src="img/header/usa.png">
-                </a>
+                <img class="flag-img choosen" src="img/header/ukr.png">
+                <img class="flag-img" src="img/header/usa.png">
             </div>
             <div class="profile-container">
                 <img class="profile-img" src="img/profile/avatar.png">
@@ -31,35 +27,50 @@
     </header>
 
     <div class="container">
-        <h2 id = 'registraion-title'>Реєстрація</h2>
-        <div class="form">
-            <div class="input-group">
-                <input type="login" placeholder="Логін" id="login" required>                
-            </div>
-            <div class="input-group">
-                <input type="email" placeholder="Електронна пошта" id="email" required>
-                
-            </div>
-            <div class="input-group">
-                <input type="password" placeholder="Пароль"  id="password" required>
-                
-            </div>
-            <div class="input-group">
-                <input type="password" placeholder="Підтвердження"  id="confirm-password" required>
-                
-            </div>
-            <div class="error-message">Неправильні дані</div>
-            <div class="button-container">
-                <button id="register">Зареєструватись</button>
-            </div>
-            <div class="button-container">
-               <a href="" id = "have-account">Вже є аккаунт? Авторизація</a>
+        <div class="wrapper">
+            <div></div>
+            Ваші замки
+            <div id="new-next" class="div-button">
             </div>
         </div>
+        <div class="wrapper">
+            <div class="lock-container">
+                <img class="lock-image" src = "../../public/img/lock/user1/1.png">
+                <div>Lock 1</div>
+            </div>
+            <div class="lock-container">
+            </div>
+            <div class="lock-container">
+            </div>
+            <div class="lock-container">
+            </div>
+        </div>
+
+        <div class="wrapper">
+            <div class="lock-container">
+            </div>
+            <div class="lock-container">
+            </div>
+            <div class="lock-container">
+            </div>
+            <div class="lock-container">
+            </div>
+        </div>
+        <div class="wrapper">
+            <div></div>
+            <div id="button-previous" class="div-button">
+            </div>
+            <div></div>
+            <div id="button-next" class="div-button">
+            </div>
+            <div></div>
+        </div>
     </div>
+
+
     <footer>
         <div class="wrapper">
-            <div class="footer-element"> 
+            <div class="footer-element">    
             </div>
             <div class="footer-element">
                <a id = 'contact-us'>Contact us</a>
@@ -71,7 +82,7 @@
                 <a id = 'private-policy'>Privacy Policy</a>
             </div>
             <div class="footer-element"> 
-                <a id = 'terms-conditions'>Terms & Conditions</a>
+                <a id = 'terms-cconditions'>Terms & Conditions</a>
             </div>
             <div class="footer-element"> 
             </div>
@@ -86,6 +97,5 @@
             </div>
         </div>
     </footer>
-    <script src="script/regpage.js"></script>
 </body>
 </html>
