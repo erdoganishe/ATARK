@@ -27,11 +27,27 @@ async function saveChangesAddEventListener(){
     });
 }
 
+const getImageOrFallback = (path, fallback) => {
+    return new Promise(resolve => {
+      const img = new Image();
+      img.src = path;
+      img.onload = () => resolve(path);
+      img.onerror = () => resolve(fallback);
+    });
+  };
 
 async function getStartProfileInfo(){
     resData = await getProfileData();
     profileImage = document.getElementById('profile-img');
-    profileImage.src = `/img/profile/${resData._id}.png`;
+
+
+    const link = getImageOrFallback(
+        `/img/profile/${resData._id}.png`,
+        '/img/profile/avatar.png'
+        ).then(result =>  profileImage.src = result || result);
+
+    
+    
 }
 
 saveChangesAddEventListener();
