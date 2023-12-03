@@ -86,10 +86,13 @@ function makeChosen() {
 
 function addHrefToButtons(){
     const regButton = document.getElementById('to-login-button');
-    const loginButton = document.getElementById('to-registration-button');
+    
     regButton.addEventListener('click', ()=>{
         window.location.href = `/registration?lang=${urlParams.get('lang')}`; 
     });
+
+    const loginButton = document.getElementById('to-registration-button');
+    
     loginButton.addEventListener('click', ()=>{
         window.location.href = `/login?lang=${urlParams.get('lang')}`; 
     });

@@ -10,7 +10,6 @@ if (Object.values(availableLanguages).includes(urlParams.get('lang'))){
     currentLanguage = urlParams.get('lang');
 }
 
-
 const translations = {
     uk: {
         registration: 'Реєстрація',
@@ -41,20 +40,6 @@ const translations = {
 };
 
 
-function getTranslation(key) {
-    return translations[currentLanguage][key] || key;
-}
-
-function switchLanguage (){
-    if (currentLanguage == 'uk'){
-        currentLanguage = 'en';
-    }
-    else
-    {
-        currentLanguage = 'uk';
-    }
-}
-
 function updateText(){
     document.getElementById('registraion-title').innerHTML = getTranslation('registration');
     document.getElementById('login').placeholder = getTranslation('login');
@@ -67,6 +52,21 @@ function updateText(){
     document.getElementById('our-service').innerHTML = getTranslation('ourServices');
     document.getElementById('private-policy').innerHTML = getTranslation('privacyPolicy');
     document.getElementById('terms-conditions').innerHTML = getTranslation('termsConditions');
+}
+
+
+function getTranslation(key) {
+    return translations[currentLanguage][key] || key;
+}
+
+function switchLanguage (){
+    if (currentLanguage == 'uk'){
+        currentLanguage = 'en';
+    }
+    else
+    {
+        currentLanguage = 'uk';
+    }
 }
 
 function makeChosen() {
@@ -90,13 +90,11 @@ function addHrefToLink(){
     haveAccountA.href = `/login?lang=${urlParams.get('lang')}`; 
 }
 
-
 function registrationButtonAddEvent(){
     const emailInput = document.getElementById('email');
     const loginInput = document.getElementById('login');
     const passwordInput = document.getElementById('password');
     const passwordConInput = document.getElementById('confirm-password');
-
     const registrButton = document.getElementById('register');
 
 
@@ -129,7 +127,7 @@ function registrationButtonAddEvent(){
     });
 }
 
-makeChosen();
+
 addHrefToLink();
 registrationButtonAddEvent();
-
+makeChosen();

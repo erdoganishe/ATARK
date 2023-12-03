@@ -93,36 +93,6 @@ function makeChosen() {
 
 }
 
-function addHrefToButtons(){
-    const toProfile = document.getElementById('profile-href');
-    toProfile.addEventListener('click', ()=>{
-        window.location.href = `/profile?lang=${urlParams.get('lang')}`; 
-    });
-
-    const toMain = document.getElementById('to-main-href');
-    toMain.addEventListener('click', ()=>{
-        window.location.href = `/main?lang=${urlParams.get('lang')}`; 
-    });
-
-    const toNewLock = document.getElementById('new-lock-href');
-    toNewLock.addEventListener('click', ()=>{
-        window.location.href = `/newLock?lang=${urlParams.get('lang')}`; 
-    });
-}
-
-
-
-
-
-
-async function getProfileData(){
-    const responce = await fetch('/api/user');
-    const resData = await responce.json();
-
-    return resData;
-}
-
-
 async function saveChangesAddEventListener(){
     resData = await getProfileData();
     const saveChangesButton = document.getElementById('save-changes-profile-button');
@@ -144,15 +114,6 @@ async function saveChangesAddEventListener(){
     });
 }
 
-const getImageOrFallback = (path, fallback) => {
-    return new Promise(resolve => {
-      const img = new Image();
-      img.src = path;
-      img.onload = () => resolve(path);
-      img.onerror = () => resolve(fallback);
-    });
-  };
-
 async function getStartProfileInfo(){
     resData = await getProfileData();
     profileImage = document.getElementById('profile-img');
@@ -167,7 +128,13 @@ async function getStartProfileInfo(){
     
 }
 
+async function getProfileData(){
+    const responce = await fetch('/api/user');
+    const resData = await responce.json();
+
+    return resData;
+}
+
 saveChangesAddEventListener();
 getStartProfileInfo();
 makeChosen();
-addHrefToButtons();

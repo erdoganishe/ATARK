@@ -5,7 +5,6 @@ async function getProfileData(){
     return resData;
 }
 
-
 const getImageOrFallback = (path, fallback) => {
     return new Promise(resolve => {
       const img = new Image();
@@ -14,7 +13,6 @@ const getImageOrFallback = (path, fallback) => {
       img.onerror = () => resolve(fallback);
     });
 };
-
 
 async function addProfileOnLoad(){
     const resData = await getProfileData();
