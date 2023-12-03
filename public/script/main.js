@@ -74,6 +74,64 @@ function addHrefToButtons(){
     });
 }
 
+const lockCount = 17;
+let currentPage = 0;
+
+function cleanLocks(){
+    const locks = document.getElementsByClassName('lock-container');
+    for (let i = 0; i < 8; i++){
+        locks[i].getElementsByTagName("img")[0].src = '';
+        locks[i].getElementsByTagName("div")[0].innerHTML = '';
+    }  
+}
+
+function updateLocks(){
+    const locks = document.getElementsByClassName('lock-container');
+
+    let countOfLocksOnPage = 8;
+    if ( (currentPage+1) * 8 > lockCount){
+        countOfLocksOnPage = lockCount % 8;
+    }
+
+    for (let i = 0; i < countOfLocksOnPage; i++){
+        //locks[i].getElementsByTagName("img")[0].src = `../img/lock/${id[i+currentPage*8]}.png`;?
+        locks[i].getElementsByTagName("div")[0].innerHTML = `${i+currentPage*8}`;
+    }  
+}
+
+function addSwapPagesEvents(){
+
+    const PrevPageButton = document.getElementById('button-previous');
+    const nextPageButton = document.getElementById('button-next');
+
+    PrevPageButton.addEventListener('click', () => {
+        if (currentPage*8 - 8 >= 0) {
+            currentPage -= 1;
+        }
+        else
+        {
+            currentPage = (lockCount - lockCount % 8)/8;
+        }
+        console.log(currentPage);
+        cleanLocks();
+        updateLocks();
+    });
+
+    nextPageButton.addEventListener('click', ()=>{
+        if (currentPage*8 + 8 < lockCount) {
+            currentPage += 1;
+        }
+        else {
+            currentPage = 0;
+        }
+        console.log(currentPage);
+        cleanLocks();
+        updateLocks();
+    });
+}
+
 makeChosen();
 addHrefToButtons();
-
+addSwapPagesEvents();
+cleanLocks();
+updateLocks();

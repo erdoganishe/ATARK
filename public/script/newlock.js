@@ -132,10 +132,10 @@ async function addNewLock (){
             const fileUpResponce = await fetch('/fileUpload', {
                 method: 'POST',
                 body: formData
-              });
-              const fileUpData = await fileUpResponce.json();
-              console.log(fileUpData);
-            //window.location.href = `/main?lang=${urlParams.get('lang')}`;
+            });
+            const fileUpData = await fileUpResponce.json();
+            console.log(fileUpData);
+            window.location.href = `/main?lang=${urlParams.get('lang')}`;
         } else {
             console.log('Access denied');
             alert(getTranslation('imageOrDataError'));
