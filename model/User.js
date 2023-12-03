@@ -21,14 +21,6 @@ const userSchema = new Schema({
         type: String,
         require: true
     },
-    options: {
-        real_name: String,
-        location: {
-            country: String,
-            state: String,
-            city: String
-        }
-    },
     refreshToken: String,
     refreshTokenMobile: String
 });

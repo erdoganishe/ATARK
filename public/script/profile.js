@@ -65,7 +65,6 @@ function updateText(){
     document.getElementById('email-label').innerHTML = getTranslation('email');
     document.getElementById('login-wrapper').innerHTML = getTranslation('login');
     document.getElementById('password-wrapper').innerHTML = getTranslation('editPassword');
-    document.getElementById('old-password-input').placeholder = getTranslation('previousPassword');
     document.getElementById('new-password-input').placeholder = getTranslation('newPassword');
     document.getElementById('confirm-password-input').placeholder = getTranslation('confirmPassword');
     document.getElementById('avatar-wrapper').innerHTML = getTranslation('avatar');
@@ -140,14 +139,12 @@ function blockInputs(){
 
     const loginInput = document.getElementById('login-input');
     const emailInput = document.getElementById('email-input');
-    const oldPasswordInput = document.getElementById('old-password-input');
     const newPasswordInput = document.getElementById('new-password-input');
     const confirmPasswordInput = document.getElementById('confirm-password-input');
     
 
     loginInput.disabled = true;
     emailInput.disabled = true;
-    oldPasswordInput.disabled = true;
     newPasswordInput.disabled = true;
     confirmPasswordInput.disabled = true;
     
@@ -157,15 +154,14 @@ function unblockInputs(){
 
     const loginInput = document.getElementById('login-input');
     const emailInput = document.getElementById('email-input');
-    const oldPasswordInput = document.getElementById('old-password-input');
     const newPasswordInput = document.getElementById('new-password-input');
     const confirmPasswordInput = document.getElementById('confirm-password-input');
 
     loginInput.disabled = false;
     emailInput.disabled = false;
-    oldPasswordInput.disabled = false;
     newPasswordInput.disabled = false;
     confirmPasswordInput.disabled = false;
+    
 }
 
 function showButton(){
@@ -174,6 +170,33 @@ function showButton(){
 
 function hideButton(){
     document.getElementById("save-changes-profile-button").classList.add("hidden");
+}
+
+async function setValueForInputs(){
+    userData = await getProfileData();
+    
+    const loginInput = document.getElementById('login-input');
+    const emailInput = document.getElementById('email-input');
+
+    emailInput.value = userData.email;
+    loginInput.value = userData.username;
+
+    const loginLabel = document.getElementById('profile-name-label');
+
+    loginLabel.innerHTML = userData.username;
+}
+
+async function setPlaceholderForInputs(){
+    userData = await getProfileData();
+    
+    const loginInput = document.getElementById('login-input');
+    const emailInput = document.getElementById('email-input');
+
+    console.log(userData);
+    emailInput.value = "";
+    loginInput.value = "";
+    emailInput.placeholder = userData.email;
+    loginInput.placeholder = userData.username;
 }
 
 function editButtonAddEvent(){
@@ -187,18 +210,50 @@ function editButtonAddEvent(){
         showButton();
         unblockInputs();
         editButton.classList.add("hidden");
+        setPlaceholderForInputs();
 
         saveChanges.addEventListener('click', async () => {
             
             const loginInputValue = document.getElementById('login-input').value;
             const emailInputValue = document.getElementById('email-input').value;
-            const oldPasswordInputValue = document.getElementById('old-password-input').value;
+            
             const newPasswordInputValue = document.getElementById('new-password-input').value;
             const confirmPasswordInputValue = document.getElementById('confirm-password-input').value;
             
+            let putBody = {
+            };
             blockInputs();
             hideButton();
+            setValueForInputs();
             editButton.classList.remove("hidden");
+            if (emailInputValue!=""){
+                putBody.email = emailInputValue;
+            }
+            if (loginInputValue!=""){
+                putBody.username = loginInputValue;
+            }
+            if (newPasswordInputValue==confirmPasswordInputValue){
+                if (newPasswordInputValue!=""){
+                    putBody.pwd = newPasswordInputValue;
+                }   
+            }
+            else
+            {
+                alert("err");
+            }
+            
+            const userResponce = await fetch('/api/user', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(putBody)
+            });
+            const userData = await userResponce.json();
+            
+            const responce = await fetch('/auth/logout');
+            window.location.href = `/login?lang=${urlParams.get('lang')}`; 
+
         });
     });
 }
@@ -207,3 +262,4 @@ editButtonAddEvent();
 saveChangesAddEventListener();
 getStartProfileInfo();
 makeChosen();
+setValueForInputs();

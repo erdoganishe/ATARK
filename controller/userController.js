@@ -16,13 +16,11 @@ const updateUser = async (req, res) => {
 
     if (req.body?.username) user.username = req.body.username;
     if (req.body?.email) user.email = req.body.email;
-  
-    if (req.body?.password) {
+    if (req.body?.pwd) {
         const bcrypt = require('bcrypt');
-        const hashedPwd = await bcrypt.hash(req.body.password, 10);
-        user.password = hashedPwd;
+        const hashedPwd = await bcrypt.hash(req.body.pwd, 10);
+        user.pwd = hashedPwd;
     }
-    if (req.body?.options) user.options = req.body.options;
 
     const result = await user.save();
     console.log(result);

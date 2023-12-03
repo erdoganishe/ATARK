@@ -1,6 +1,9 @@
+
 #include <SPI.h> 
 #include <RFID.h>
 #include <Servo.h> 
+
+
 
 RFID rfid(10, 9);       //D10:pin of tag reader SDA. D9:pin of tag reader RST 
 unsigned char status; 
