@@ -94,4 +94,27 @@ footer{
 #lock-image{
     height: 200px;
     width: 200px;
+    border-radius: 10px;
+}
+
+.wrapper input{
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background-color: #5A189A;
+    color: #E0AAFF;
+    border-radius: 5px;
+}
+
+.profile-button {
+    background-color: #7B2CBF;
+    color: #E0AAFF;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.hidden{
+    visibility: hidden;
 }
