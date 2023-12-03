@@ -11,17 +11,25 @@
     <header>
         <div class="wrapper">
             <div class="logo-container">
-                <img class="logo-img" src="img/header/logo.png">                
-                <div class="name-container">SafeSwipe</div>
+                <img class="logo-img" src="img/header/logo.png">       
+                <a id = "to-main-href">      
+                    <div class="name-container">SafeSwipe</div>
+                </a> 
             </div>
             <div></div>
             <div></div>
             <div class="language-container">
-                <img class="flag-img choosen" src="img/header/ukr.png">
-                <img class="flag-img" src="img/header/usa.png">
+                <a href = "/main?lang=uk">
+                    <img class="flag-img choosen" src="img/header/ukr.png">
+                </a>
+                <a href = "/main?lang=en">
+                    <img class="flag-img" src="img/header/usa.png">
+                </a>    
             </div>
             <div class="profile-container">
-                <img class="profile-img" src="img/profile/avatar.png">
+                <a id = "profile-href">
+                    <img class="profile-img" src="img/profile/avatar.png">
+                </a>
             </div>
         </div>
     </header>
@@ -29,9 +37,11 @@
     <div class="container">
         <div class="wrapper">
             <div></div>
-            Ваші замки
+            <div id = "your-locks">Ваші замки</div>
             <div id="new-next" class="div-button">
-                <img src="/img/lock/plus.png">
+                <a id = "new-lock-href">
+                    <img src="/img/lock/plus.png">
+                </a>
             </div>
         </div>
         <div class="wrapper">
@@ -85,7 +95,7 @@
                 <a id = 'private-policy'>Privacy Policy</a>
             </div>
             <div class="footer-element"> 
-                <a id = 'terms-cconditions'>Terms & Conditions</a>
+                <a id = 'terms-conditions'>Terms & Conditions</a>
             </div>
             <div class="footer-element"> 
             </div>
@@ -100,5 +110,6 @@
             </div>
         </div>
     </footer>
+    <script src = "/script/main.js"></script>
 </body>
 </html>

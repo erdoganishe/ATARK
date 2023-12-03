@@ -1,3 +1,120 @@
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+const availableLanguages = {
+    Ukrainian: 'uk',
+    English: 'en'
+}
+let currentLanguage = 'uk';
+
+if (Object.values(availableLanguages).includes(urlParams.get('lang'))){
+    currentLanguage = urlParams.get('lang');
+}
+
+const translations = {
+    uk: {
+        email: 'Електронна пошта',
+        editProfile: 'Редагувати профіль',
+        login: 'Логін',
+        editPassword: 'Змінити пароль ',
+        avatar: 'Аватар',
+        saveChanges: 'Зберегти зміни',
+        logOut: 'Вийти з аккаунта',
+        previousPassword: 'Попередній пароль',
+        newPassword: 'Новий пароль',
+        confirmPassword: 'Підтвердіть новий пароль',
+        contactUs: "Зв'язатись з нами",
+        ourServices: 'Наші послуги',
+        privacyPolicy: 'Політика конфеденційості',
+        termsConditions: 'Умови користування'
+    },
+    en: {
+        email: 'E-mail',
+        editProfile: 'Edit profile',
+        login: 'Login',
+        editPassword: 'Edit password',
+        avatar: 'Avatar',
+        saveChanges: 'Save changes',
+        logOut: 'Log Out',
+        previousPassword: 'Previous password',
+        newPassword: 'New password',
+        confirmPassword: 'Confirm new password',
+        contactUs: 'Contact us',
+        ourServices: 'Our Services',
+        privacyPolicy: 'Privacy Policy',
+        termsConditions: 'Terms & Conditions'
+    }
+};
+
+
+function getTranslation(key) {
+    return translations[currentLanguage][key] || key;
+}
+
+function switchLanguage (){
+    if (currentLanguage == 'uk'){
+        currentLanguage = 'en';
+    }
+    else
+    {
+        currentLanguage = 'uk';
+    }
+}
+
+function updateText(){
+    document.getElementById('edit-profile-button').innerHTML = getTranslation('editProfile');
+    document.getElementById('email-label').innerHTML = getTranslation('email');
+    document.getElementById('login-wrapper').innerHTML = getTranslation('login');
+    document.getElementById('password-wrapper').innerHTML = getTranslation('editPassword');
+    document.getElementById('old-password-input').placeholder = getTranslation('previousPassword');
+    document.getElementById('new-password-input').placeholder = getTranslation('newPassword');
+    document.getElementById('confirm-password-input').placeholder = getTranslation('confirmPassword');
+    document.getElementById('avatar-wrapper').innerHTML = getTranslation('avatar');
+    document.getElementById('save-changes-profile-button').innerHTML = getTranslation('saveChanges');
+    document.getElementById('log-out-profile-button').innerHTML = getTranslation('logOut');
+    document.getElementById('contact-us').innerHTML = getTranslation('contactUs');
+    document.getElementById('our-service').innerHTML = getTranslation('ourServices');
+    document.getElementById('private-policy').innerHTML = getTranslation('privacyPolicy');
+    document.getElementById('terms-conditions').innerHTML = getTranslation('termsConditions');
+}
+
+function makeChosen() {
+
+    var languageButtons = document.getElementsByClassName("flag-img");
+    for (let i=0;i<languageButtons.length;i++){
+        languageButtons[i].classList.remove("choosen");
+    }
+    if (currentLanguage=='uk'){
+        languageButtons[0].classList.add("choosen");
+    }
+    else{
+        languageButtons[1].classList.add("choosen");
+    }
+    updateText();
+
+}
+
+function addHrefToButtons(){
+    const toProfile = document.getElementById('profile-href');
+    toProfile.addEventListener('click', ()=>{
+        window.location.href = `/profile?lang=${urlParams.get('lang')}`; 
+    });
+
+    const toMain = document.getElementById('to-main-href');
+    toMain.addEventListener('click', ()=>{
+        window.location.href = `/main?lang=${urlParams.get('lang')}`; 
+    });
+
+    const toNewLock = document.getElementById('new-lock-href');
+    toNewLock.addEventListener('click', ()=>{
+        window.location.href = `/newLock?lang=${urlParams.get('lang')}`; 
+    });
+}
+
+
+
+
+
+
 async function getProfileData(){
     const responce = await fetch('/api/user');
     const resData = await responce.json();
@@ -52,3 +169,5 @@ async function getStartProfileInfo(){
 
 saveChangesAddEventListener();
 getStartProfileInfo();
+makeChosen();
+addHrefToButtons();
