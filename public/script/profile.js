@@ -135,6 +135,75 @@ async function getProfileData(){
     return resData;
 }
 
+
+function blockInputs(){
+
+    const loginInput = document.getElementById('login-input');
+    const emailInput = document.getElementById('email-input');
+    const oldPasswordInput = document.getElementById('old-password-input');
+    const newPasswordInput = document.getElementById('new-password-input');
+    const confirmPasswordInput = document.getElementById('confirm-password-input');
+    
+
+    loginInput.disabled = true;
+    emailInput.disabled = true;
+    oldPasswordInput.disabled = true;
+    newPasswordInput.disabled = true;
+    confirmPasswordInput.disabled = true;
+    
+}
+
+function unblockInputs(){
+
+    const loginInput = document.getElementById('login-input');
+    const emailInput = document.getElementById('email-input');
+    const oldPasswordInput = document.getElementById('old-password-input');
+    const newPasswordInput = document.getElementById('new-password-input');
+    const confirmPasswordInput = document.getElementById('confirm-password-input');
+
+    loginInput.disabled = false;
+    emailInput.disabled = false;
+    oldPasswordInput.disabled = false;
+    newPasswordInput.disabled = false;
+    confirmPasswordInput.disabled = false;
+}
+
+function showButton(){
+    document.getElementById("save-changes-profile-button").classList.remove("hidden");
+}
+
+function hideButton(){
+    document.getElementById("save-changes-profile-button").classList.add("hidden");
+}
+
+function editButtonAddEvent(){
+
+    blockInputs();
+    const saveChanges = document.getElementById("save-changes-profile-button");
+    const editButton = document.getElementById("edit-profile-button");
+
+    editButton.addEventListener('click', async () => {
+
+        showButton();
+        unblockInputs();
+        editButton.classList.add("hidden");
+
+        saveChanges.addEventListener('click', async () => {
+            
+            const loginInputValue = document.getElementById('login-input').value;
+            const emailInputValue = document.getElementById('email-input').value;
+            const oldPasswordInputValue = document.getElementById('old-password-input').value;
+            const newPasswordInputValue = document.getElementById('new-password-input').value;
+            const confirmPasswordInputValue = document.getElementById('confirm-password-input').value;
+            
+            blockInputs();
+            hideButton();
+            editButton.classList.remove("hidden");
+        });
+    });
+}
+
+editButtonAddEvent();
 saveChangesAddEventListener();
 getStartProfileInfo();
 makeChosen();

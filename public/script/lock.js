@@ -118,7 +118,7 @@ function editButtonAddEvent(){
         unblockInputs();
         editButton.classList.add("hidden");
 
-        saveChanges.addEventListener('click',()=>{
+        saveChanges.addEventListener('click', async () => {
             
             const newName = document.getElementById('name-input').value;
             const newAdress = document.getElementById('adress-input').value;

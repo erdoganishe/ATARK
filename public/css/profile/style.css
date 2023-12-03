@@ -114,3 +114,8 @@ footer{
     color: #E0AAFF;
     border-radius: 5px;
 }
+
+
+.hidden{
+    visibility: hidden;
+}
