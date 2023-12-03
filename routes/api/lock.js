@@ -4,7 +4,7 @@ const lockController = require('../../controller/lockController');
 const { verifyJWT } = require('../../middleware/verifyJWT');
 
 router.route('/')
-    .get(verifyJWT, lockController.getUserLock)
+    .get(verifyJWT, lockController.getUserLocks)
     .post(lockController.createNewLock)
     .put(lockController.updateLock);
 

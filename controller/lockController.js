@@ -20,15 +20,14 @@ const getUserLocks = async (req, res) => {
 }
 
 const createNewLock = async (req, res) => {
+    console.log(req.body);
     if(!req?.body?.uId) return res.sendStatus(400).json({ 'message': 'UId are required!' });
     if(!req?.body?.name) return res.sendStatus(400).json({ 'message': 'Name are required!' });
     if(!req?.body?.adress) return res.sendStatus(400).json({ 'message': 'Adress are required!' });
-    if(!req?.body?.pKey) return res.sendStatus(400).json({ 'message': 'Produkt key are required!' });
 
     try { 
         const result = await Lock.create({
             uId: req.body.uId,
-            productKey: req.body.pKey,
             adress: req.body.adress,
             name: req.body.name
         });
@@ -69,7 +68,7 @@ const getLockbyId = async (req, res) => {
 
 module.exports = {
     getAllLocks,
-    getUserLock,
+    getUserLocks,
     createNewLock,
     updateLock,
     getLockbyId

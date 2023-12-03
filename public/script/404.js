@@ -78,6 +78,11 @@ function addHrefToLink(){
     haveAccountA.href = `/?lang=${urlParams.get('lang')}`; 
 }
 
+function addHrefToLogo(){
+    const toMain = document.getElementById('to-main-link');
+    toMain.href = `/?lang=${urlParams.get('lang')}`; 
+}
 
 makeChosen();
 addHrefToLink();
+addHrefToLogo();

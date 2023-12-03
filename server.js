@@ -35,6 +35,7 @@ app.use(express.static(path.join(__dirname, '/public')));
 app.use('/', require('./routes/root'));
 // api
 app.use('/api/user', require("./routes/api/user"));
+app.use('/api/lock', require("./routes/api/lock"));
 // auth
 app.use('/auth', require('./routes/auth'));
 // 404

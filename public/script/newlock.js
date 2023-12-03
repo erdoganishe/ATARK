@@ -21,7 +21,8 @@ const translations = {
         contactUs: "Зв'язатись з нами",
         ourServices: 'Наші послуги',
         privacyPolicy: 'Політика конфеденційості',
-        termsConditions: 'Умови користування'
+        termsConditions: 'Умови користування',
+        imageOrDataError: 'Немає зображення або інформації'
     },
     en: {
         newLock: 'New Lock',
@@ -33,7 +34,8 @@ const translations = {
         contactUs: 'Contact us',
         ourServices: 'Our Services',
         privacyPolicy: 'Privacy Policy',
-        termsConditions: 'Terms & Conditions'
+        termsConditions: 'Terms & Conditions',
+        imageOrDataError: 'Image or data missing'
     }
 };
 
@@ -54,8 +56,6 @@ function switchLanguage (){
 
 function updateText(){
     document.getElementById('new-lock-title').innerHTML = getTranslation('newLock');
-    document.getElementById('id-input-title').innerHTML = getTranslation('identificator');
-    document.getElementById('id-input').placeholder = getTranslation('identificator');
     document.getElementById('name-input-title').innerHTML = getTranslation('name');
     document.getElementById('name-input').placeholder = getTranslation('name');
     document.getElementById('adress-input-title').innerHTML = getTranslation('adress');
@@ -84,35 +84,98 @@ function makeChosen() {
 
 }
 
+function checkData(){
+    const nameLock = document.getElementById('name-input').value;
+    const adressLock = document.getElementById('adress-input').value;
+    if (nameLock!="" && adressLock!=""){
+        return true;
+    }
+    return false;
+}
+
+async function getProfileData(){
+    const responce = await fetch('/api/user');
+    const resData = await responce.json();
+
+    return resData;
+}
 
 
-// async function getProfileData(){
-//     const responce = await fetch('/api/user');
-//     const resData = await responce.json();
+const getImageOrFallback = (path, fallback) => {
+    return new Promise(resolve => {
+      const img = new Image();
+      img.src = path;
+      img.onload = () => resolve(path);
+      img.onerror = () => resolve(fallback);
+    });
+};
 
-//     return resData;
-// }
 
-// async function saveChangesAddEventListener(){
-//     resData = await getProfileData();
-//     const saveChangesButton = document.getElementById('save-changes-profile-button');
-//     saveChangesButton.addEventListener('click', async () => {
-//         jsonData = { "uId": `${resData._id}`, "isProfile": true 
-//     }
-//     const myFiles = document.getElementById('myFiles').files[0];
+async function addProfileOnLoad(){
+    const resData = await getProfileData();
+    const profileImage = document.getElementsByClassName('profile-img')[0];
 
-//     const formData = new FormData();
+    const link = getImageOrFallback(
+        `/img/profile/${resData._id}.png`,
+        '/img/profile/avatar.png'
+        ).then(result =>  profileImage.src = result || result);
+    const aHref = document.getElementById('profile-href');
+    aHref.href = `/profile?lang=${urlParams.get('lang')}`; 
 
-//     formData.append('file', myFiles);
-//     formData.append('jsonData', JSON.stringify(jsonData));
-//     const fileUpResponce = await fetch('/fileUpload', {
-//       method: 'POST',
-//       body: formData
-//     });
-//     const fileUpData = await fileUpResponce.json();
-//     console.log(fileUpData);
-//     });
-// }
+}
 
-//saveChangesAddEventListener();
+async function addNewLock (){
+    const nameLock = document.getElementById('name-input').value;
+    const adressLock = document.getElementById('adress-input').value;
+    const addNewLockButton = document.getElementById('add-button-title');
+    resData = await getProfileData();
+
+    addNewLockButton.addEventListener('click', async () => {
+
+        const nameLock = document.getElementById('name-input').value;
+        const adressLock = document.getElementById('adress-input').value;
+        
+        const formData = new FormData();
+        const myFiles = document.getElementById('myFiles').files
+        // const formData = new FormData()
+
+        let tmp = 0;
+        if(myFiles)
+            Object.keys(myFiles).forEach(key => {
+                tmp++;
+            });
+        console.log(tmp);
+        
+        if(tmp > 0 && checkData()){
+            console.log('Access granted');
+            const lockResponce = await fetch('/api/lock', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({'uId': `${resData._id}`, 'name': nameLock,'adress': adressLock})
+            });
+            const lockData = await lockResponce.json();
+            console.log(lockData.uId);
+
+            jsonData = { "uId": `${resData._id}`, "isProfile": false, "fileId": `${lockData._id}`};
+            formData.append('file', myFiles[0]);
+            formData.append('jsonData', JSON.stringify(jsonData));
+
+            const fileUpResponce = await fetch('/fileUpload', {
+                method: 'POST',
+                body: formData
+              });
+              const fileUpData = await fileUpResponce.json();
+              console.log(fileUpData);
+            //window.location.href = `/main?lang=${urlParams.get('lang')}`;
+        } else {
+            console.log('Access denied');
+            alert(getTranslation('imageOrDataError'));
+        }
+    });
+}
+
 makeChosen();
+addNewLock();
+addProfileOnLoad();
