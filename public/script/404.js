@@ -89,6 +89,5 @@ function addHrefToButtons(){
     });
 }
 
-
 makeChosen();
 addHrefToButtons();
