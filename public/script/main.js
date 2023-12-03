@@ -80,7 +80,8 @@ let currentPage = 0;
 function cleanLocks(){
     const locks = document.getElementsByClassName('lock-container');
     for (let i = 0; i < 8; i++){
-        locks[i].getElementsByTagName("img")[0].src = '';
+        locks[i].getElementsByTagName("a")[0].getElementsByTagName("img")[0].src = '';
+        locks[i].getElementsByTagName("a")[0].href = '';
         locks[i].getElementsByTagName("div")[0].innerHTML = '';
     }  
 }
@@ -94,7 +95,8 @@ function updateLocks(){
     }
 
     for (let i = 0; i < countOfLocksOnPage; i++){
-        //locks[i].getElementsByTagName("img")[0].src = `../img/lock/${id[i+currentPage*8]}.png`;?
+        //locks[i].getElementsByTagName("a")[0].getElementsByTagName("img")[0].src = `../img/lock/${id[i+currentPage*8]}.png`;?
+        locks[i].getElementsByTagName("a")[0].href = `/lock?lang=${urlParams.get('lang')}`;//&id=${id}`;
         locks[i].getElementsByTagName("div")[0].innerHTML = `${i+currentPage*8}`;
     }  
 }
