@@ -165,10 +165,12 @@ function unblockInputs(){
 }
 
 function showButton(){
+    document.getElementById("hidden-wrapper").classList.remove("hidden");
     document.getElementById("save-changes-profile-button").classList.remove("hidden");
 }
 
 function hideButton(){
+    document.getElementById("hidden-wrapper").classList.add("hidden");
     document.getElementById("save-changes-profile-button").classList.add("hidden");
 }
 

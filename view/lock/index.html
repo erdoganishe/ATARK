@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"   >
     <link rel="stylesheet" href="css/lock/style.css">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <title>Головна</title>
 </head>
 <body>
@@ -21,10 +22,10 @@
             <div></div>
             <div></div>
             <div class="language-container">
-                <a href = "?lang=uk">
+                <a href = "?lang=uk" id = 'uk-redirect'>
                     <img class="flag-img choosen" src="img/header/ukr.png">
                 </a>
-                <a href = "?lang=en">
+                <a href = "?lang=en" id = 'en-redirect'>
                     <img class="flag-img" src="img/header/usa.png">
                 </a>  
             </div>
@@ -44,6 +45,11 @@
                 <button class="profile-button" id = "edit-lock-button">Змінити інформацію</button>
             </div>
         </div>
+        <div class="wrapper hidden" id = 'hidden-wrapper'>
+            <form id="uploadForm1" class="form-upload">
+                <input type="file" id="myFiles" accept="image/png" />
+            </form>
+        </div>
         <div class="wrapper" id = "id-label">
             Ідентифікатор
         </div>
@@ -54,13 +60,13 @@
             Ім'я
         </div>
         <div class="wrapper">
-            <input class="profile-input" id = "name-input" readonly="readonly" type="text" placeholder="lock1">
+            <input class="profile-input" id = "name-input" type="text" placeholder="lock1">
         </div>
         <div class="wrapper" id = 'adress-label'>
             Адреса
         </div>
         <div class="wrapper">
-            <input class="profile-input" id = "adress-input" readonly="readonly" type="text" placeholder="Адреса">
+            <input class="profile-input" id = "adress-input" type="text" placeholder="Адреса">
         </div>
         <div class="wrapper">
             <button class="profile-button hidden" id = "save-changes-lock-button">Зберегти зміни</button>

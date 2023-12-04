@@ -6,6 +6,10 @@ const availableLanguages = {
 }
 let currentLanguage = 'uk';
 
+let locksData;
+let lockCount;
+let currentPage =0;
+
 if (Object.values(availableLanguages).includes(urlParams.get('lang'))){
     currentLanguage = urlParams.get('lang');
 }
@@ -74,15 +78,22 @@ function addHrefToButtons(){
     });
 }
 
-const lockCount = 17;
-let currentPage = 0;
+
+
+async function getLocks(){
+    const responce = await fetch('/api/lock');
+    const lockData = await responce.json();
+
+    return lockData;
+}
+
 
 function cleanLocks(){
     const locks = document.getElementsByClassName('lock-container');
     for (let i = 0; i < 8; i++){
-        locks[i].getElementsByTagName("a")[0].getElementsByTagName("img")[0].src = '';
+        locks[i].getElementsByTagName("a")[0].getElementsByTagName("img")[0].src = 'img/lock/sample.png';
         locks[i].getElementsByTagName("a")[0].href = '';
-        locks[i].getElementsByTagName("div")[0].innerHTML = '';
+        locks[i].getElementsByTagName("div")[0].innerHTML = 'You haven`t this lock yet';
     }  
 }
 
@@ -95,10 +106,11 @@ function updateLocks(){
     }
 
     for (let i = 0; i < countOfLocksOnPage; i++){
-        //locks[i].getElementsByTagName("a")[0].getElementsByTagName("img")[0].src = `../img/lock/${id[i+currentPage*8]}.png`;?
-        locks[i].getElementsByTagName("a")[0].href = `/lock?lang=${urlParams.get('lang')}`;//&id=${id}`;
-        locks[i].getElementsByTagName("div")[0].innerHTML = `${i+currentPage*8}`;
+        locks[i].getElementsByTagName("a")[0].getElementsByTagName("img")[0].src = `../img/lock/${locksData[0].uId}/${locksData[i+currentPage*8]._id}.png`;
+        locks[i].getElementsByTagName("a")[0].href = `/lock?lang=${urlParams.get('lang')}&id=${locksData[i+currentPage*8]._id}`;
+        locks[i].getElementsByTagName("div")[0].innerHTML = `${locksData[i+currentPage*8].name}`;
     }  
+    
 }
 
 function addSwapPagesEvents(){
@@ -132,8 +144,19 @@ function addSwapPagesEvents(){
     });
 }
 
-makeChosen();
-addHrefToButtons();
-addSwapPagesEvents();
-cleanLocks();
-updateLocks();
+
+async function setup(){
+
+    locksData = await getLocks();
+    console.log(locksData);
+    lockCount = locksData.length;
+    makeChosen();
+    addHrefToButtons();
+    addSwapPagesEvents();
+    cleanLocks();
+    updateLocks();
+    
+
+}
+
+setup();

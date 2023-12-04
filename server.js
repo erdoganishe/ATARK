@@ -18,6 +18,10 @@ connectDB();
 // set port equal to 3000
 const PORT = process.env.PORT || 3000;
 
+// favicon
+const favicon = require('serve-favicon'); 
+app.use(favicon(__dirname + '/favicon.ico'));
+
 // cors + credentinals
 app.use(credentials);
 app.use(cors(corsOptions));

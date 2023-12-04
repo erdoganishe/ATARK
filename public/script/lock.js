@@ -1,5 +1,10 @@
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
+
+let lockId = urlParams.get('id');
+let lockData;
+
+
 const availableLanguages = {
     Ukrainian: 'uk',
     English: 'en'
@@ -9,6 +14,7 @@ let currentLanguage = 'uk';
 if (Object.values(availableLanguages).includes(urlParams.get('lang'))){
     currentLanguage = urlParams.get('lang');
 }
+
 
 const translations = {
     uk: {
@@ -83,6 +89,13 @@ function makeChosen() {
 
 }
 
+async function getLockData(){
+    const responce = await fetch(`/api/lock/${lockId}`);
+    const lockData = await responce.json();
+
+    return lockData;
+}
+
 function blockInputs(){
     const nameInput = document.getElementById('name-input');
     const adressInput = document.getElementById('adress-input');
@@ -100,14 +113,16 @@ function unblockInputs(){
 }
 
 function showButton(){
+    document.getElementById("hidden-wrapper").classList.remove("hidden");
     document.getElementById("save-changes-lock-button").classList.remove("hidden");
 }
 
 function hideButton(){
+    document.getElementById("hidden-wrapper").classList.add("hidden");
     document.getElementById("save-changes-lock-button").classList.add("hidden");
 }
 
-function editButtonAddEvent(){
+async function editButtonAddEvent(){
     blockInputs();
     const saveChanges = document.getElementById("save-changes-lock-button");
     const editButton = document.getElementById("edit-lock-button");
@@ -122,10 +137,46 @@ function editButtonAddEvent(){
             
             const newName = document.getElementById('name-input').value;
             const newAdress = document.getElementById('adress-input').value;
+
+            let putBody = {};
+
+            putBody.id = lockId;
             
+            if (newName!=""){
+                putBody.name = newName;
+            }
+            if (newAdress!=""){
+                putBody.adress = newAdress;
+            }
+
+            const lockResponce = await fetch('/api/lock', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(putBody)
+            });
+            const lockData = await lockResponce.json();
+            
+            const myFiles = document.getElementById('myFiles').files[0];
+            console.log(myFiles);
+            let formData = new FormData();
+            jsonData = { "uId": `${lockData.uId}`, "isProfile": false, "fileId": `${lockData._id}`};
+            formData.append('file', myFiles);
+            formData.append('jsonData', JSON.stringify(jsonData));
+
+            const fileUpResponce = await fetch('/fileUpload', {
+                method: 'POST',
+                body: formData
+            });
+            const fileUpData = await fileUpResponce.json();
+            console.log(fileUpData);
+
             blockInputs();
             hideButton();
             editButton.classList.remove("hidden");
+
+            window.location.href = `?lang=${urlParams.get('lang')}&id=${lockId}`;
         });
 
 
@@ -133,5 +184,35 @@ function editButtonAddEvent(){
 
 }
 
-makeChosen();
-editButtonAddEvent();
+async function setData(){
+    const lockImage = document.getElementById('lock-image');
+    const lockIdContainer = document.getElementById('placeholder-id');
+    const lockNameContainer = document.getElementById('name-input');
+    const lockAdressContainer = document.getElementById('adress-input');
+
+    lockImage.src = `../img/lock/${lockData.uId}/${lockData._id}.png`;
+    lockIdContainer.innerHTML = lockData._id;
+    lockNameContainer.value = lockData.name;
+    lockAdressContainer.value = lockData.adress;
+}
+
+function updateHrefs(){
+    const ukHref = document.getElementById('uk-redirect');
+    const enHref = document.getElementById('en-redirect');
+
+    ukHref.href = `?lang=uk&id=${lockId}`;
+    enHref.href = `?lang=en&id=${lockId}`;
+}
+
+async function setup(){
+        
+    lockData = await getLockData();
+    setData();
+    makeChosen();
+    editButtonAddEvent();    
+    updateHrefs();
+}
+
+
+
+setup();

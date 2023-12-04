@@ -8,15 +8,16 @@ const getAllLocks = async (req, res) => {
 }
 
 const getUserLocks = async (req, res) => {
-    if(!req?.user) return res.status(400).json({ 'message': 'User ID required' });
-    const user = await User.findById(!req?.user);
+     if(!req?.user) return res.status(400).json({ 'message': 'Username required' });
+    const user = await User.findOne({"username": req.user});
     const uId = user.id;
 
-    const locks = await Lock.find({uId: uId}).exec();
+     locks = await Lock.find({uId: uId}).exec();
 
     if(!locks) return res.status(204).json({ "message": `No locks with user ${req.user}.` });
 
     res.send(locks);
+    //res.json({});
 }
 
 const createNewLock = async (req, res) => {
@@ -45,7 +46,7 @@ const updateLock = async (req, res) => {
         return res.status(400).json({ 'message': 'ID is required!' });
     }
 
-    const lock = await Lock.findById(req.bpdy.id).exec();
+    const lock = await Lock.findById(req.body.id).exec();
     if(!lock) res.status(204).json({ "message": `No lock with ID ${req.body.id}.` });
 
     if(req.body?.name) lock.name = req.body.name;
