@@ -18,6 +18,7 @@ if (Object.values(availableLanguages).includes(urlParams.get('lang'))){
 
 const translations = {
     uk: {
+        title: 'SafeSwipe - Замок',
         idLabel: 'Ідентифікатор',
         nameLabel: "Ім'я",
         placeholderName: "Введіть нове ім'я",
@@ -31,6 +32,7 @@ const translations = {
         termsConditions: 'Умови користування',
     },
     en: {
+        title: 'SafeSwipe - Lock',
         idLabel: 'ID',
         nameLabel: 'Name',
         placeholderName: 'Put new name',
@@ -60,6 +62,7 @@ function switchLanguage (){
 }
 
 function updateText(){
+    document.title = getTranslation('title');
     document.getElementById('edit-lock-button').innerHTML = getTranslation('change');
     document.getElementById('id-label').innerHTML = getTranslation('idLabel');
     document.getElementById('name-label').innerHTML = getTranslation('nameLabel');

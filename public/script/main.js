@@ -16,6 +16,7 @@ if (Object.values(availableLanguages).includes(urlParams.get('lang'))){
 
 const translations = {
     uk: {
+        title: 'SafeSwipe - Головна',
         yourLocks: 'Ваші замки',
         contactUs: "Зв'язатись з нами",
         ourServices: 'Наші послуги',
@@ -23,6 +24,7 @@ const translations = {
         termsConditions: 'Умови користування'
     },
     en: {
+        title: 'SafeSwipe - Main',
         yourLocks: 'Your Locks',
         contactUs: 'Contact us',
         ourServices: 'Our Services',
@@ -47,6 +49,7 @@ function switchLanguage (){
 }
 
 function updateText(){
+    document.title = getTranslation('title');
     document.getElementById('your-locks').innerHTML = getTranslation('yourLocks');
     document.getElementById('contact-us').innerHTML = getTranslation('contactUs');
     document.getElementById('our-service').innerHTML = getTranslation('ourServices');

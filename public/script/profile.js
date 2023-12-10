@@ -12,6 +12,8 @@ if (Object.values(availableLanguages).includes(urlParams.get('lang'))){
 
 const translations = {
     uk: {
+        editError: 'Неплавильно введені дані',
+        title: 'SafeSwipe - Профіль',
         email: 'Електронна пошта',
         editProfile: 'Редагувати профіль',
         login: 'Логін',
@@ -28,6 +30,8 @@ const translations = {
         termsConditions: 'Умови користування'
     },
     en: {
+        editError: 'Wrong input data',
+        title: 'SafeSwipe - Profile',
         email: 'E-mail',
         editProfile: 'Edit profile',
         login: 'Login',
@@ -61,6 +65,8 @@ function switchLanguage (){
 }
 
 function updateText(){
+    
+    document.title = getTranslation('title');
     document.getElementById('edit-profile-button').innerHTML = getTranslation('editProfile');
     document.getElementById('email-label').innerHTML = getTranslation('email');
     document.getElementById('login-wrapper').innerHTML = getTranslation('login');
@@ -241,7 +247,7 @@ function editButtonAddEvent(){
             }
             else
             {
-                alert("err");
+                alert(getTranslation("editError"));
             }
             
             const userResponce = await fetch('/api/user', {

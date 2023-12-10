@@ -12,6 +12,9 @@ if (Object.values(availableLanguages).includes(urlParams.get('lang'))){
 
 const translations = {
     uk: {
+        timeError: 'Помилка. Спробуйте пізніше',
+        passError: 'Паролі не збігаються',
+        title: 'SafeSwipe - Реєстрація',
         registration: 'Реєстрація',
         login: 'Логін',
         email: 'Електронна пошта',
@@ -25,6 +28,9 @@ const translations = {
         termsConditions: 'Умови користування'
     },
     en: {
+        timeError: 'Error. Try again later',
+        passError: 'Passwords are not matched!',
+        title: 'SafeSwipe - Registration',
         registration: 'Registration',
         login: 'Login',
         email: 'Email',
@@ -41,6 +47,7 @@ const translations = {
 
 
 function updateText(){
+    document.title = getTranslation('title');
     document.getElementById('registraion-title').innerHTML = getTranslation('registration');
     document.getElementById('login').placeholder = getTranslation('login');
     document.getElementById('email').placeholder = getTranslation('email');
@@ -104,8 +111,7 @@ function registrationButtonAddEvent(){
         const password = passwordInput.value;
         const passwordCon = passwordConInput.value;
         if(password != passwordCon) {
-            console.log("Passwords are not matched!");
-            alert("Passwords are not matched!");
+            alert(getTranslation('passError'));
         } else {
             const response = await fetch('/auth/register', {
                 method: 'POST',
@@ -121,7 +127,7 @@ function registrationButtonAddEvent(){
                 console.log(data);
                 window.location.href = `/login?lang=${urlParams.get('lang')}`;
             } else {
-                alert(data.message ?? "Error. Try again later");
+                alert(data.message ?? getTranslation('timeError'));
             }
         }
     });

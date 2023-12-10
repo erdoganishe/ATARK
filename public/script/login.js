@@ -12,6 +12,8 @@ if (Object.values(availableLanguages).includes(urlParams.get('lang'))){
 
 const translations = {
     uk: {
+        timeError: 'Помилка. Спробуйте пізніше',
+        title: 'SafeSwipe - Авторизація',
         authorisation: 'Авторизація',
         userLogin: 'Логін',
         password: 'Пароль',
@@ -23,6 +25,8 @@ const translations = {
         termsConditions: 'Умови користування'
     },
     en: {
+        timeError: 'Error. Try again later',
+        title: 'SafeSwipe - Authorisation',
         authorisation: 'Authorisation',
         userLogin: 'Login',
         password: 'Password',
@@ -51,6 +55,8 @@ function switchLanguage (){
 }
 
 function updateText(){
+    
+    document.title = getTranslation('title');
     document.getElementById('registraion-title').innerHTML = getTranslation('authorisation');
     document.getElementById('login').placeholder = getTranslation('userLogin');
     document.getElementById('password').placeholder = getTranslation('password');
@@ -110,7 +116,7 @@ function addLoginButtonEvent(){
             window.location.href = `/main?lang=${urlParams.get('lang')}`;
 
         } else {
-            alert(data.message ?? "Error. Try again later");
+            alert(data.message ?? getTranslation('timeError'));
         }
     });
 }

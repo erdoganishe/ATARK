@@ -12,6 +12,7 @@ if (Object.values(availableLanguages).includes(urlParams.get('lang'))){
 
 const translations = {
     uk: {
+        title: 'SafeSwipe - Новий замок',
         newLock: 'Новий замок',
         identificator: 'Ідентифікатор',
         name: "Ім'я",
@@ -25,6 +26,7 @@ const translations = {
         imageOrDataError: 'Немає зображення або інформації'
     },
     en: {
+        title: 'SafeSwipe - New Lock',
         newLock: 'New Lock',
         identificator: 'Identificator',
         name: 'Name',
@@ -55,6 +57,7 @@ function switchLanguage (){
 }
 
 function updateText(){
+    document.title = getTranslation('title');
     document.getElementById('new-lock-title').innerHTML = getTranslation('newLock');
     document.getElementById('name-input-title').innerHTML = getTranslation('name');
     document.getElementById('name-input').placeholder = getTranslation('name');
@@ -104,7 +107,6 @@ async function addNewLock (){
         
         const formData = new FormData();
         const myFiles = document.getElementById('myFiles').files
-        // const formData = new FormData()
 
         let tmp = 0;
         if(myFiles)
@@ -114,7 +116,6 @@ async function addNewLock (){
         console.log(tmp);
         
         if(tmp > 0 && checkData()){
-            console.log('Access granted');
             const lockResponce = await fetch('/api/lock', {
                 method: 'POST',
                 headers: {
@@ -123,8 +124,7 @@ async function addNewLock (){
                 body: JSON.stringify({'uId': `${resData._id}`, 'name': nameLock,'adress': adressLock})
             });
             const lockData = await lockResponce.json();
-            console.log(lockData.uId);
-
+  
             jsonData = { "uId": `${resData._id}`, "isProfile": false, "fileId": `${lockData._id}`};
             formData.append('file', myFiles[0]);
             formData.append('jsonData', JSON.stringify(jsonData));
@@ -134,10 +134,9 @@ async function addNewLock (){
                 body: formData
             });
             const fileUpData = await fileUpResponce.json();
-            console.log(fileUpData);
             window.location.href = `/main?lang=${urlParams.get('lang')}`;
         } else {
-            console.log('Access denied');
+
             alert(getTranslation('imageOrDataError'));
         }
     });

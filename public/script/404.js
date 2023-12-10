@@ -15,6 +15,7 @@ console.log(currentLanguage);
 
 const translations = {
     uk: {
+        title: 'SafeSwipe - Сторінка 404',
         pageNotFound: 'Сторінку не знайдено!',
         toMainPage: 'Повернутись на головну',
         contactUs: "Зв'язатись з нами",
@@ -23,6 +24,7 @@ const translations = {
         termsConditions: 'Умови користування'
     },
     en: {
+        title: 'SafeSwipe - Page404',
         pageNotFound: 'Page not found!',
         toMainPage: 'Return to main page',
         contactUs: 'Contact us',
@@ -48,7 +50,7 @@ function switchLanguage (){
 }
 
 function updateText(){
-    
+    document.title = getTranslation('title');
     document.getElementById('page-not-found').innerHTML = getTranslation('pageNotFound');
     document.getElementById('to-main').innerHTML = getTranslation('toMainPage');
     document.getElementById('contact-us').innerHTML = getTranslation('contactUs');

@@ -12,6 +12,7 @@ if (Object.values(availableLanguages).includes(urlParams.get('lang'))){
 
 const translations = {
     uk: {
+        title: 'SafeSwipe - Стартова',
         nfcTitle: 'Що таке NFC технологія?',
         nfcParagraph: 'Майже всі сучасні смартфони та розумні годинники оснащені технологією NFC. Усвідомлюєте ви це чи ні, але сканер NFC вашого телефону, швидше за все, активний прямо зараз. Однак не хвилюйтеся, оскільки чіп NFC у вашому телефоні є пасивним сканером, який нічого не робить, доки ви не піднесете його в межах кількох дюймів від іншого пристрою або мітки NFC. Як і багато функцій вашого смартфона, він спокійно сидить у фоновому режимі, поки не знадобиться, але його також можна використовувати для розблокування широкого спектру цікавих функцій, які можуть полегшити ваше життя.',
         lockTitle: 'NFC замки',
@@ -25,6 +26,7 @@ const translations = {
         termsConditions: 'Умови користування'
     },
     en: {
+        title: 'SafeSwipe - Welcome',
         nfcTitle: 'What NFC technology is?',
         nfcParagraph: ' Nearly all of today’s smartphones and smartwatches are equipped with NFC technology. Whether you realize it or not, your phone’s NFC scanner is likely active right now. Don’t worry, though, as the NFC chip in your phone is a passive scanner that does nothing until you hold it within a couple of inches of another NFC device or tag. Like many features of your smartphone, it quietly sits in the background until it’s needed, but it can also be used to unlock a wide range of cool features that can make your life easier. ',
         lockTitle: 'NFC locks',
@@ -55,6 +57,7 @@ function switchLanguage (){
 }
 
 function updateText(){
+    document.title = getTranslation('title');
     document.getElementById('nfc-title').innerHTML = getTranslation('nfcTitle');
     document.getElementById('nfc-paragraph').innerHTML = getTranslation('nfcParagraph');
     document.getElementById('lock-title').innerHTML = getTranslation('lockTitle');
