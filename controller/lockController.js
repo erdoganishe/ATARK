@@ -51,6 +51,7 @@ const updateLock = async (req, res) => {
 
     if(req.body?.name) lock.name = req.body.name;
     if(req.body?.adress) lock.adress = req.body.adress;
+    if(req.body?.isAbleToChange) lock.isAbleToChange = req.body.isAbleToChange;
 
     const result = await lock.save();
     console.log(result);
@@ -67,10 +68,20 @@ const getLockbyId = async (req, res) => {
     res.json(lock._doc);
 }
 
+const getLockByUId = async (req, res) => {
+    if(!req?.params?.id) return res.status(400).json({ 'message': 'Lock ID required' });
+
+    const lock = await Lock.find({"uId": req.params.id});
+    if(!lock) return res.status(204).json({ "message": `No lock with uId ${req.params.id}.` });
+
+    res.json(lock);
+}
+
 module.exports = {
     getAllLocks,
     getUserLocks,
     createNewLock,
     updateLock,
-    getLockbyId
+    getLockbyId,
+    getLockByUId
 }

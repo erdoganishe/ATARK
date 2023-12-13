@@ -9,6 +9,7 @@ RFID rfid(10, 9);       //D10:pin of tag reader SDA. D9:pin of tag reader RST
 unsigned char status; 
 unsigned char str[MAX_LEN]; //MAX_LEN is 16: size of the array 
 
+const String lockId = "6577683904411188fb0d5a3d"; 
 String accessGranted [2] = {"13911116414", "128141313114"};  //RFID serial numbers to grant access to
 int accessGrantedSize = 2;                                //The number of serial numbers
 

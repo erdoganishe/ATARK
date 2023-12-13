@@ -9,6 +9,7 @@ const filesPayloadExists = require('../middleware/filesPayloadExists');
 const fileExtLimiter = require('../middleware/fileExtLimiter');
 const fileSizeLimiter = require('../middleware/fileSizeLimiter');
 const fileSaver = require('../middleware/fileSaver');
+const lockController = require('../controller/lockController');
 
 // homepage
 router.get('^/$|/unauth', (req, res) => {
@@ -45,6 +46,7 @@ router.get('/main', verifyJWT, (req, res) => {
     res.sendFile(path.join(__dirname, '../view/main', 'index.html'));
 });
 
+// upload file
 router.post('/fileUpload',
     verifyJWT,
     fileUpload({ createParentPath: true }),
@@ -52,5 +54,16 @@ router.post('/fileUpload',
     fileExtLimiter(['.png']),
     fileSizeLimiter,
     fileSaver)
+
+// get lock data on mob
+router.route('/lock-mob')
+    .get(verifyJWTMobile, 
+        lockController.getAllLocks)
+    .put(verifyJWTMobile,lockController.updateLock);
+
+router.route('/lock-mob/:id')
+    .get(lockController.getLockbyId);
+router.route('/lock-mob-by-uid/:id')
+    .get(lockController.getLockByUId);
 
 module.exports = router;

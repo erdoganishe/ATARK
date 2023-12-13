@@ -46,10 +46,10 @@ const handleLogin = async (req, res) => {
 const handleLoginMobile = async (req, res) => {
     const { email, pwd } = req.body;
     if (!email  || !pwd) return res.status(400).json({ 'message': 'Email or username and password are required.' });
-    
+
     let foundUser = await User.findOne({ email: email }).exec(); 
     if (!foundUser) foundUser = await User.findOne({ username: email }).exec(); 
-    if (!foundUser) return res.status(401).json({ 'message': 'No such user' });
+    if (!foundUser) return res.status(401).json({ 'message': 'No such user wirh' });
 
     const match = await bcrypt.compare(pwd, foundUser.password);
     if (match) {
@@ -75,8 +75,10 @@ const handleLoginMobile = async (req, res) => {
         //Saving refresh token with cur user
         foundUser.refreshTokenMobile = refreshToken;
         result = await foundUser.save();
+        uId = foundUser._id;
         //console.log(result);
-        res.json({ "accessToken": accessToken, "refreshToken": refreshToken });
+        res.json({ "accessToken": accessToken,
+         "refreshToken": refreshToken , "uId": uId});
     } else {
         res.sendStatus(401);
     }

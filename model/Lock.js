@@ -14,6 +14,13 @@ const lockSchema = new Schema({
         type: String,
         require: true
     },
+    keys: [String],
+    isAbleToChange:{
+        type: Boolean,
+        required: false,
+        
+    },
+    log: [String]
 
 });
 

@@ -5,7 +5,7 @@ const path = require('path');
 const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
 const credentials = require('./middleware/credentials');
-
+const serialIO = require('./middleware/serialIO');
 const cookieParser = require('cookie-parser');
 
 // db import
@@ -14,6 +14,9 @@ const connectDB = require('./config/dbConn');
 
 //connect to db 
 connectDB();
+
+// read/write from arduino
+serialIO();
 
 // set port equal to 3000
 const PORT = process.env.PORT || 3000;

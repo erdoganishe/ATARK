@@ -115,7 +115,7 @@ async function addNewLock (){
             });
         console.log(tmp);
         
-        if(tmp > 0 && checkData()){
+        if(tmp > 0 /*&& checkData()*/){
             const lockResponce = await fetch('/api/lock', {
                 method: 'POST',
                 headers: {

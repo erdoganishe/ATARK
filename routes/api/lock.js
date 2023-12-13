@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const lockController = require('../../controller/lockController');
-const { verifyJWT } = require('../../middleware/verifyJWT');
+const { verifyJWT, verifyJWTMobile } = require('../../middleware/verifyJWT');
 
 router.route('/')
     .get(verifyJWT, lockController.getUserLocks)
