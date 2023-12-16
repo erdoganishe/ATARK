@@ -1,15 +1,21 @@
+
+//get search params
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const availableLanguages = {
     Ukrainian: 'uk',
     English: 'en'
 }
+
+//variable for current language
 let currentLanguage = 'uk';
 
+//get current language
 if (Object.values(availableLanguages).includes(urlParams.get('lang'))){
     currentLanguage = urlParams.get('lang');
 }
 
+//object for list of translations
 const translations = {
     uk: {
         title: 'SafeSwipe - Новий замок',
@@ -39,13 +45,17 @@ const translations = {
         termsConditions: 'Terms & Conditions',
         imageOrDataError: 'Image or data missing'
     }
+
 };
 
 
+//get translation for word for current language
 function getTranslation(key) {
     return translations[currentLanguage][key] || key;
 }
 
+
+//switch language 
 function switchLanguage (){
     if (currentLanguage == 'uk'){
         currentLanguage = 'en';
@@ -56,6 +66,8 @@ function switchLanguage (){
     }
 }
 
+
+//update translations
 function updateText(){
     document.title = getTranslation('title');
     document.getElementById('new-lock-title').innerHTML = getTranslation('newLock');
@@ -71,6 +83,8 @@ function updateText(){
     document.getElementById('terms-conditions').innerHTML = getTranslation('termsConditions');
 }
 
+
+//add border too current language flag and update text
 function makeChosen() {
 
     var languageButtons = document.getElementsByClassName("flag-img");
@@ -83,10 +97,13 @@ function makeChosen() {
     else{
         languageButtons[1].classList.add("choosen");
     }
+
     updateText();
 
 }
 
+
+//get profile data from back-end
 async function getProfileData(){
     const responce = await fetch('/api/user');
     const resData = await responce.json();
@@ -94,17 +111,24 @@ async function getProfileData(){
     return resData;
 }
 
+
+//add click event for lock button
 async function addNewLock (){
-    const nameLock = document.getElementById('name-input').value;
-    const adressLock = document.getElementById('adress-input').value;
+
+    //get button
     const addNewLockButton = document.getElementById('add-button-title');
+    
+    //get profile data
     resData = await getProfileData();
 
+    //add event listener for click
     addNewLockButton.addEventListener('click', async () => {
 
+        //get text values from inputs
         const nameLock = document.getElementById('name-input').value;
         const adressLock = document.getElementById('adress-input').value;
         
+        //get for request
         const formData = new FormData();
         const myFiles = document.getElementById('myFiles').files
 
@@ -113,9 +137,12 @@ async function addNewLock (){
             Object.keys(myFiles).forEach(key => {
                 tmp++;
             });
-        console.log(tmp);
-        
-        if(tmp > 0 /*&& checkData()*/){
+            
+        //if any files detected
+
+        if(tmp > 0){
+
+            //fetch new info to back-end
             const lockResponce = await fetch('/api/lock', {
                 method: 'POST',
                 headers: {
@@ -123,24 +150,34 @@ async function addNewLock (){
                 },
                 body: JSON.stringify({'uId': `${resData._id}`, 'name': nameLock,'adress': adressLock})
             });
+
+            //get responce
             const lockData = await lockResponce.json();
-  
             jsonData = { "uId": `${resData._id}`, "isProfile": false, "fileId": `${lockData._id}`};
+            
+            //get body for file upload request
             formData.append('file', myFiles[0]);
             formData.append('jsonData', JSON.stringify(jsonData));
 
+            //image request
             const fileUpResponce = await fetch('/fileUpload', {
                 method: 'POST',
                 body: formData
             });
+
+            //get responce and redirect 
             const fileUpData = await fileUpResponce.json();
             window.location.href = `/main?lang=${urlParams.get('lang')}`;
+        
         } else {
-
+            //alert no image error 
             alert(getTranslation('imageOrDataError'));
         }
+
     });
+
 }
 
+//start functions
 makeChosen();
 addNewLock();

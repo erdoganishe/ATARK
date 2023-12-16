@@ -3,6 +3,9 @@ const router = express.Router();
 const path = require('path');
 
 const { verifyJWT, verifyJWTMobile } = require('../middleware/verifyJWT');
+const verifyRoles = require('../middleware/verifyRoles');
+const ROLES_LIST = require('../config/roles_list');
+const userController = require('../controller/userController');
 
 const fileUpload = require('express-fileupload');
 const filesPayloadExists = require('../middleware/filesPayloadExists');
@@ -65,5 +68,15 @@ router.route('/lock-mob/:id')
     .get(lockController.getLockbyId);
 router.route('/lock-mob-by-uid/:id')
     .get(lockController.getLockByUId);
+
+router.route('/admin-panel')
+    .get(verifyJWT, 
+        verifyRoles(ROLES_LIST.Admin), (req, res) => {
+        res.sendFile(path.join(__dirname, '../view/admin', 'admin.html'));
+    });
+
+router.route('/users')
+    .get(verifyJWT, 
+        verifyRoles(ROLES_LIST.Admin), userController.getAllUser);
 
 module.exports = router;

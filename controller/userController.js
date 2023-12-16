@@ -1,8 +1,10 @@
 const User = require('../model/User');
+const Lock = require('../model/Lock');
 
 const getAllUser = async (req, res) => {
     const users = await User.find();
     if (!users) return res.sendStatus(204).json({ 'message': 'No users at all!' });
+    console.log(users);
     res.json(users)
 }
 
@@ -50,8 +52,19 @@ const getUserById = async (req, res) => {
     res.json({ "username": user.username, "rena": user.options.real_name });
 }
 
+const deleteUser = async (req, res) => {
+    if (!req?.params?.id) return res.status(400).json({ 'message': 'User ID required' });
+
+    await Lock.deleteMany({uId: req.params.id});
+    await User.deleteMany({_id: req.params.id});
+
+    getAllUser(req, res);
+}
+
 module.exports = {
     updateUser,
     getUser,
-    getUserById
+    getUserById,
+    getAllUser,
+    deleteUser
 }

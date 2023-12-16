@@ -1,3 +1,5 @@
+
+//get profile data
 async function getProfileData(){
     const responce = await fetch('/api/user');
     const resData = await responce.json();
@@ -5,6 +7,8 @@ async function getProfileData(){
     return resData;
 }
 
+
+// check if profile image exists 
 const getImageOrFallback = (path, fallback) => {
     return new Promise(resolve => {
       const img = new Image();
@@ -14,6 +18,7 @@ const getImageOrFallback = (path, fallback) => {
     });
 };
 
+//upload profile at header
 async function addProfileOnLoad(){
     const resData = await getProfileData();
     const profileImage = document.getElementsByClassName('profile-img')[0];
@@ -26,4 +31,5 @@ async function addProfileOnLoad(){
 
 }
 
+//start functions
 addProfileOnLoad();

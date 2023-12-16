@@ -47,7 +47,6 @@ const verifyJWT = (req, res, next) => {
             
                     req.user = foundUser.username;
                     req.roles = roles;
-
                     next();
                 });
             } else {
@@ -55,8 +54,7 @@ const verifyJWT = (req, res, next) => {
             }
         } else {
             req.user = decoded.UserInfo.username;
-            req.roles = decoded.UserInfo.roles;
-
+            req.roles = decoded.UserInfo.roles; 
             next();
         }
     });

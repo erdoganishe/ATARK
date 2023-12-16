@@ -1,15 +1,21 @@
+
+//get search parameters
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const availableLanguages = {
     Ukrainian: 'uk',
     English: 'en'
 }
+
+//variable for current language
 let currentLanguage = 'uk';
 
+//get current languages from parameters
 if (Object.values(availableLanguages).includes(urlParams.get('lang'))){
     currentLanguage = urlParams.get('lang');
 }
 
+//object for list of translations
 const translations = {
     uk: {
         timeError: 'Помилка. Спробуйте пізніше',
@@ -40,10 +46,13 @@ const translations = {
 };
 
 
+//get tranlation for word for current language
 function getTranslation(key) {
     return translations[currentLanguage][key] || key;
 }
 
+
+//switch language 
 function switchLanguage (){
     if (currentLanguage == 'uk'){
         currentLanguage = 'en';
@@ -54,6 +63,8 @@ function switchLanguage (){
     }
 }
 
+
+//set translation for text fields
 function updateText(){
     
     document.title = getTranslation('title');
@@ -68,9 +79,14 @@ function updateText(){
     document.getElementById('terms-conditions').innerHTML = getTranslation('termsConditions');
 }
 
+
+//add border to cuurent language flag and update text
 function makeChosen() {
 
+    //get buttons
     var languageButtons = document.getElementsByClassName("flag-img");
+    
+    //add border
     for (let i=0;i<languageButtons.length;i++){
         languageButtons[i].classList.remove("choosen");
     }
@@ -80,26 +96,38 @@ function makeChosen() {
     else{
         languageButtons[1].classList.add("choosen");
     }
+    
+    //update text
     updateText();
 
 }
 
+
+//add redirect to registration
 function addHrefToLink(){
     const haveAccountA = document.getElementById('have-account');
     haveAccountA.href = `/registration?lang=${urlParams.get('lang')}`; 
 }
 
+
+//add event for login click
 function addLoginButtonEvent(){
+
+    //get login and password input
     const login = document.getElementById('login');
     const password = document.getElementById('password');
 
+    //get button
     const register = document.getElementById('register');
 
+    //add event listener
     register.addEventListener('click', async () => {
+        
+        //get input values
         const loginValue = login.value;
         const passwordValue = password.value;
         
-        
+        //fetch to back-end
         const response = await fetch('/auth/login', {
             method: 'POST',
             headers: {
@@ -108,20 +136,24 @@ function addLoginButtonEvent(){
             body: JSON.stringify({ 'pwd': passwordValue, 'email': loginValue })
         });
 
+        //get responce
         const data = await response.json();
 
         if (response.ok) {
-
-            console.log('ok');
+            //login if ok
             window.location.href = `/main?lang=${urlParams.get('lang')}`;
 
         } else {
+
+            //alert error if wrong input
             alert(data.message ?? getTranslation('timeError'));
         }
+ 
     });
+
 }
 
-
+//start functions
 makeChosen();
 addHrefToLink();
 addLoginButtonEvent();

@@ -3,6 +3,7 @@ const User = require('../../model/User');
 const handleLogout = async (req, res,next) => {
 
 
+    console.log("pre log out");
     const cookies = req.cookies;
     if (!cookies?.jwt) return res.sendStatus(204); 
     const refreshToken = cookies.jwt;
@@ -20,6 +21,7 @@ const handleLogout = async (req, res,next) => {
 
     res.clearCookie('jwt', {httpOnly: true, sameSite: 'None', secure: true}); 
     res.clearCookie('accessToken', {httpOnly: true, sameSite: 'None', secure: true}); 
+    console.log("log out");
     res.sendStatus(204);
 }
 

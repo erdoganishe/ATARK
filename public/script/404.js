@@ -1,18 +1,21 @@
+
+//get search parameters
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const availableLanguages = {
     Ukrainian: 'uk',
     English: 'en'
 }
-let currentLanguage = 'uk';
-console.log(currentLanguage);
 
+//variable for current language
+let currentLanguage = 'uk';
+
+//get cuurent language from search parameters
 if (Object.values(availableLanguages).includes(urlParams.get('lang'))){
     currentLanguage = urlParams.get('lang');
 }
 
-console.log(currentLanguage);
-
+//object for list of translations
 const translations = {
     uk: {
         title: 'SafeSwipe - Сторінка 404',
@@ -35,10 +38,13 @@ const translations = {
 };
 
 
+//get translation for word for current language
 function getTranslation(key) {
     return translations[currentLanguage][key] || key;
 }
 
+
+//switch language
 function switchLanguage (){
     if (currentLanguage == 'uk'){
         currentLanguage = 'en';
@@ -49,6 +55,8 @@ function switchLanguage (){
     }
 }
 
+
+//update translations
 function updateText(){
     document.title = getTranslation('title');
     document.getElementById('page-not-found').innerHTML = getTranslation('pageNotFound');
@@ -59,9 +67,14 @@ function updateText(){
     document.getElementById('terms-conditions').innerHTML = getTranslation('termsConditions');
 }
 
+
+//add border to current language flag and update text
 function makeChosen() {
 
+    //get flags
     var languageButtons = document.getElementsByClassName("flag-img");
+    
+    //add border
     for (let i=0;i<languageButtons.length;i++){
         languageButtons[i].classList.remove("choosen");
     }
@@ -71,8 +84,12 @@ function makeChosen() {
     else{
         languageButtons[1].classList.add("choosen");
     }
+
+    //update text
     updateText();
 
 }
 
+
+//start functions
 makeChosen();

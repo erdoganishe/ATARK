@@ -9,6 +9,7 @@ router.route('/')
     .put(verifyJWT, lockController.updateLock);
 
 router.route('/:id')
-    .get(verifyJWT, lockController.getLockbyId);
+    .get(verifyJWT, lockController.getLockbyId)
+    .post(verifyJWT, lockController.deleteLock);
 
 module.exports = router;

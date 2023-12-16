@@ -4,7 +4,15 @@ const { format } = require('date-fns');
 const { v4: uuid} = require('uuid');
 
 function serialIO(){
-    const port = new SerialPort({path:'COM4', baudRate: 9600 });
+    var port;
+        port = new SerialPort({path:'COM4', baudRate: 9600 }, (err) => {
+            if(err)console.log(err);
+            else startCon(port);
+        });
+}
+
+function startCon(port){
+    if(!port) return;
     let iskfst = false;
     let kid = "";
 
@@ -66,7 +74,7 @@ function serialIO(){
                 const resut = await lock.save();
                 console.log(resut);
             }
-            console.log("RD: '" + datas + "'");
+            //console.log("RD: '" + datas + "'");
         }
         // send all available keys to arduino
         if(datas.includes("gk")){

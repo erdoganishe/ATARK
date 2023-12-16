@@ -11,6 +11,7 @@ router.route('/')
     .put(verifyJWT, userController.updateUser);
 
 router.route('/:id')
-    .get(verifyJWT, userController.getUserById);
+    .get(verifyJWT, userController.getUserById)
+    .post(verifyJWT, userController.deleteUser);
 
 module.exports = router;

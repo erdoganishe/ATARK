@@ -77,11 +77,20 @@ const getLockByUId = async (req, res) => {
     res.json(lock);
 }
 
+const deleteLock = async (req, res) => {
+    if (!req?.params?.id) return res.status(400).json({ 'message': 'User ID required' });
+
+    await Lock.deleteMany({_id: req.params.id});
+
+    getAllLocks(req, res);
+}
+
 module.exports = {
     getAllLocks,
     getUserLocks,
     createNewLock,
     updateLock,
     getLockbyId,
-    getLockByUId
+    getLockByUId,
+    deleteLock
 }

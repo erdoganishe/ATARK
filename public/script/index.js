@@ -1,15 +1,21 @@
+
+//get search parameters
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const availableLanguages = {
     Ukrainian: 'uk',
     English: 'en'
 }
+
+//variable for current language
 let currentLanguage = 'uk';
 
+//get cuurent language from params
 if (Object.values(availableLanguages).includes(urlParams.get('lang'))){
     currentLanguage = urlParams.get('lang');
 }
 
+//object for list of translations
 const translations = {
     uk: {
         title: 'SafeSwipe - Стартова',
@@ -41,11 +47,13 @@ const translations = {
     }
 };
 
-
+//get translation of word for current language
 function getTranslation(key) {
     return translations[currentLanguage][key] || key;
 }
 
+
+//swatich language
 function switchLanguage (){
     if (currentLanguage == 'uk'){
         currentLanguage = 'en';
@@ -56,6 +64,8 @@ function switchLanguage (){
     }
 }
 
+
+//update translations
 function updateText(){
     document.title = getTranslation('title');
     document.getElementById('nfc-title').innerHTML = getTranslation('nfcTitle');
@@ -71,9 +81,14 @@ function updateText(){
     document.getElementById('terms-conditions').innerHTML = getTranslation('termsConditions');
 }
 
+
+//add borders for current language flag anddd update text
 function makeChosen() {
 
+    //get flags
     var languageButtons = document.getElementsByClassName("flag-img");
+    
+    //add borders
     for (let i=0;i<languageButtons.length;i++){
         languageButtons[i].classList.remove("choosen");
     }
@@ -83,23 +98,32 @@ function makeChosen() {
     else{
         languageButtons[1].classList.add("choosen");
     }
+
+    //update text
     updateText();
 
 }
 
+//add redirects for buttons
 function addHrefToButtons(){
+
+    //get buttons
     const regButton = document.getElementById('to-login-button');
+    const loginButton = document.getElementById('to-registration-button');
     
+    //add registration event listener
     regButton.addEventListener('click', ()=>{
         window.location.href = `/registration?lang=${urlParams.get('lang')}`; 
     });
-
-    const loginButton = document.getElementById('to-registration-button');
     
+    //add authorisation event listener
     loginButton.addEventListener('click', ()=>{
         window.location.href = `/login?lang=${urlParams.get('lang')}`; 
     });
+    
 }
 
+
+//start functions
 makeChosen();
 addHrefToButtons();
