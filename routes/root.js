@@ -63,18 +63,17 @@ router.route('/lock-mob')
     .get(verifyJWTMobile, 
         lockController.getAllLocks)
     .put(verifyJWTMobile,lockController.updateLock);
-
 router.route('/lock-mob/:id')
     .get(lockController.getLockbyId);
 router.route('/lock-mob-by-uid/:id')
     .get(lockController.getLockByUId);
 
+// admnin panel
 router.route('/admin-panel')
     .get(verifyJWT, 
         verifyRoles(ROLES_LIST.Admin), (req, res) => {
         res.sendFile(path.join(__dirname, '../view/admin', 'admin.html'));
     });
-
 router.route('/users')
     .get(verifyJWT, 
         verifyRoles(ROLES_LIST.Admin), userController.getAllUser);

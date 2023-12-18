@@ -2,8 +2,6 @@ const User = require('../../model/User');
 
 const handleLogout = async (req, res,next) => {
 
-
-    console.log("pre log out");
     const cookies = req.cookies;
     if (!cookies?.jwt) return res.sendStatus(204); 
     const refreshToken = cookies.jwt;

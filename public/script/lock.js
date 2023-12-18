@@ -43,6 +43,7 @@ const translations = {
         ourServices: 'Наші послуги',
         privacyPolicy: 'Політика конфеденційості',
         termsConditions: 'Умови користування',
+        noLogCase: 'Ще немає логів'
     },
     en: {
         openCase: 'Attemp to open',
@@ -63,6 +64,7 @@ const translations = {
         ourServices: 'Our Services',
         privacyPolicy: 'Privacy Policy',
         termsConditions: 'Terms & Conditions',
+        noLogCase: 'No logs yet'
     }
 };
 
@@ -265,8 +267,11 @@ async function setData(){
     const logContainer = document.getElementById('placeholder-log');
 
     //get logs 
+    
     let logString = lockData.log[lockData.log.length-1]; 
-    let dateSubString = '';
+    let resurtLogString;
+    if (logString){
+        let dateSubString = '';
 
     //modify logs for current data format
     if (currentLanguage == 'uk'){
@@ -311,8 +316,14 @@ async function setData(){
         }
     }
 
-    let resurtLogString = getTranslation('date') + dateSubString + " UTC+2 " + logString.split('\t')[1] + getTranslation('typeOfInteruption') + typeSubString;
+    resurtLogString = getTranslation('date') + dateSubString + " UTC+2 " + logString.split('\t')[1] + getTranslation('typeOfInteruption') + typeSubString;
 
+    }
+    else
+    {
+        resurtLogString = getTranslation('noLogCase');
+    }
+    
     //set values for inputs and labels
     lockImage.src = `../img/lock/${lockData.uId}/${lockData._id}.png`;
     lockIdContainer.innerHTML = lockData._id;
